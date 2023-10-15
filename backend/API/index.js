@@ -20,7 +20,7 @@ app.listen(
 
 app.get('/api/reservations', (req, res) => {
     // Query the database to retrieve data
-      handler.dbSelectALlReservations(res, req);
+      handler.dbSelect(res, "Reservations", ['*']);
     
   });
 

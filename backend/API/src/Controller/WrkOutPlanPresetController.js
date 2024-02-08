@@ -1,7 +1,10 @@
 const wrkOutPlanService = require('../Services/WrkOutPlanPresetService');
 const userService = require('../Services/UserService');
+const wrkOutPlanMachinePresetService = require('../Services/WrkOutPlanMachinePresetService')
 const WrkOutPlanModel = require('../ORM/Models/WrkOutPlanPreset');
 const UserModel = require('../ORM/Models/User');
+const WrkOutPlanMachinePresetModel = require('../ORM/Models/WrkOutPlanMachinePreset');
+const wrkOutPlanMachinePresetController = require('./WrkOutPlanMachinePresetController');
 
 const getId = async (req,res,id) => {
     try{
@@ -9,11 +12,13 @@ const getId = async (req,res,id) => {
         
         const authorData = await userService.getId(wrkOutPlan.AuthorId);
         const author = new UserModel(authorData);
-
         const model = new WrkOutPlanModel(wrkOutPlan);
         model.author = author.constructJson();
-        
-        res.status(200).json(model.constructJson(wrkOutPlan));
+
+        const machinesData = wrkOutPlanMachinePresetController.getIdPreset(id);
+
+        console.log(machinesData);
+        res.status(200).json(model.constructJson());
     }
     catch(err){
         res.status(500).json(err);
@@ -33,7 +38,6 @@ const getAll = async (req,res) => {
             
             const author =  new UserModel(authorData);
             a.author = author.constructJson();
-            console.log(author);
             results.push(a.constructJson(b));
         }
 

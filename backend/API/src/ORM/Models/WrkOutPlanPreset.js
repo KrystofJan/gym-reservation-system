@@ -15,6 +15,15 @@ class WrkOutPlan{
             "Author": this.author
         }
     }
+
+    constructJsonPlan(){
+        return{
+            "WrkOutPlanPresetId": this.wrkOutPlanPresetId,
+            "PresetName": this.presetName,
+            "Machines": this.machines,
+            "Author": this.author
+        }
+    }
 }
 
 module.exports = WrkOutPlan;

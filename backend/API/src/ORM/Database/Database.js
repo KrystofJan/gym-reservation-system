@@ -9,7 +9,7 @@ class DatabaseHandler{
     constructor(){
         this.db = mysql.createConnection(config.Database);
     }
-    
+
     dbConnect(){
         this.db.connect((err) => {
             if(err){
@@ -33,11 +33,8 @@ class DatabaseHandler{
                 if (err) {
                   console.error('Error querying the database:', err);
                   apiLogger.logApi(err);
-                  // res.status(500).json({ error: 'Internal Server Error' }); // move to controller
                   return reject({ error: 'Internal Server Error, check the logger for more context' });
                 }
-    
-                // res.json(results); // move to controller
             
                 apiLogger.logApi("Get request on the Reservations endpoint was Successfull!");
                 resolve(results);
@@ -130,7 +127,7 @@ class DatabaseHandler{
             }
             this.db.query(
             'SELECT wm.WrkOutMachineId, wm.MachineName, ET.ExerciseTypeName, ET.BodyPart, wm.PopularityScore '+
-            'FROM WrkOutMachine wm inner join MachineExerciseTypes met on wm.WrkOutMachineId = met.WrkOutMachineId ' +         
+            'FROM WrkOutMachine wm inner join MachineExerciseTypes met on wm.WrkOutMachineId = met.WrkOutMachineId ' +
             'inner join ExerciseType ET on met.ExerciseTypeId = ET.ExerciseTypeId ' +
             'Where ET.BodyPart in ( ' +
                 'select  DISTINCT BodyPart '+

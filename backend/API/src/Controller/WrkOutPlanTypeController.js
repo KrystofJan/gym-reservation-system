@@ -56,12 +56,10 @@ const post = async (req, res) => {
 
         if (body.ExerciseTypeIds){
             for(let exerciseTypeId of body.ExerciseTypeIds){
-                const result = await wrkOutPlanTypeService.post(
-                    {
+                const result = await wrkOutPlanTypeService.post({
                         "WrkOutPlanId": body.WrkOutPlanId,
                         "ExerciseTypeId": exerciseTypeId
-                    }
-                );
+                    });
             }
             response = {
                 "Status": `Created ${body.ExerciseTypeIds.length} plan type connection for the ${body.WrkOutPlanId}`

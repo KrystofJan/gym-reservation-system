@@ -2,6 +2,9 @@ const RelationalModel = require('./RelationalModel');
 
 class WrkOutPlanTypeDAO extends RelationalModel{
 
+    /**
+     * @param {Number} id 
+     */
     async getIdPlan(id){
 
         try{
@@ -13,7 +16,10 @@ class WrkOutPlanTypeDAO extends RelationalModel{
             console.log("Nastala chyba: " + error);
         }
     }
-
+    
+    /**
+     * @param {Number} id 
+     */
     async getIdType(id){
 
         try{
@@ -26,6 +32,9 @@ class WrkOutPlanTypeDAO extends RelationalModel{
         }
     }
 
+    /**
+     * @param {*} body // TODO
+     */
     async post (body){
         try{
             const result = await this.MakeDbRequest(() => this.dbHandler.dbPost(body, "WrkOutPlanType"));

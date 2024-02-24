@@ -1,4 +1,6 @@
-class Address{
+const Model = require('./Model');
+
+class Address extends Model{
 
     constructor(jsonData){
         this.addressId = jsonData.AddressId;

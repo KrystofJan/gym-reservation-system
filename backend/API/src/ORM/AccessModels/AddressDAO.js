@@ -10,7 +10,6 @@ class AddressDAO extends RelationalModel{
         catch(err){        
             console.error(err);
         }
-        
     }
 
     async get(id){

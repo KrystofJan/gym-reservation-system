@@ -1,11 +1,11 @@
 const ExerciseTypeDAO = require('../ORM/AccessModels/ExerciseTypeDAO');
 
 const getAll = async () => {
-    return await new ExerciseTypeDAO().getAll();;
+    return await new ExerciseTypeDAO().getAll();
 }
 
 const get = async (id) => {
-    return await new ExerciseTypeDAO().get(id);;
+    return await new ExerciseTypeDAO().get(id);
 }
 
 const post = async (body) => {

@@ -3,10 +3,10 @@ const userService = require('../Services/UserService');
 const WrkOutPlanModel = require('../ORM/Models/WrkOutPlan');
 const UserModel = require('../ORM/Models/User');
 
-const getId = async (req,res,id) => {
-    try{
-        const wrkOutPlan = await wrkOutPlanService.getId(id);
-        
+const getId = async (req,res,id) => { // getOne
+    try{ // Tohle cele do Managera
+        const wrkOutPlan = await wrkOutPlanService.getId(id); // manager // getById
+
         const customerData = await userService.getId(wrkOutPlan.UserId);
         const customer = new UserModel(customerData);
 

@@ -3,6 +3,7 @@ const Model = require('./Model');
 class Address extends Model{
 
     constructor(jsonData){
+        super();
         this.addressId = jsonData.AddressId;
         this.street = jsonData.Street;
         this.city = jsonData.City;

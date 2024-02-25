@@ -1,5 +1,6 @@
 const wrkOutMachineService = require('../Services/WrkOutMachineService');
 const WrkOutMachineModel = require('../ORM/Models/WrkOutMachine');
+const RecommendedMachine = require('../ORM/Models/RecommendMachine');
 
 const getAll = async (req, res) => {
     try{
@@ -40,8 +41,8 @@ const recommendMachine = async (req,res,id) => {
 
         const result = [];
         for (const b of body){
-            const model = new WrkOutMachineModel(b);
-            result.push(model.constructJsonForRecommend()); 
+            const model = new RecommendedMachine(b);
+            result.push(model.constructJson()); 
         }
 
         res.status(200).json(result);

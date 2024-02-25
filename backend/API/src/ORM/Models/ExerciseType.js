@@ -1,6 +1,9 @@
-class ExerciseType{
+const Model = require('./Model');
+
+class ExerciseType extends Model{
 
     constructor(jsonData){
+        super();
         this.exerciseTypeId = jsonData.ExerciseTypeId
         this.typeName = jsonData.ExerciseTypeName;
         this.category = jsonData.Category;

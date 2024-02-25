@@ -1,5 +1,7 @@
-export class Model{
+class Model{
     constructJson(){
         return {}
     }
 }
+
+module.exports = Model;

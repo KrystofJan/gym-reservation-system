@@ -1,6 +1,9 @@
-class WrkOutMachine{
+const Model = require('./Model');
+
+class WrkOutMachine extends Model{
 
     constructor(jsonData){
+        super();
         this.wrkOutMachineId = jsonData.WrkOutMachineId;
         this.machineName = jsonData.MachineName;
         this.maxWeight = (jsonData.MaxWeight != null)? jsonData.MaxWeight : 0;
@@ -23,16 +26,5 @@ class WrkOutMachine{
             "PopularityScore": this.popularityScore
         }
     }
-
-    constructJsonForRecommend(){
-        return {
-            "WrkOutMachineId": this.wrkOutMachineId,
-            "MachineName": this.machineName,
-            "PopularityScore": this.popularityScore,
-            "ExerciseTypeName": this.exerciseTypeName,
-            "BodyPart": this.bodyPart
-        }
-    }
 }
-
 module.exports = WrkOutMachine;

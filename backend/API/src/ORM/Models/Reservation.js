@@ -1,8 +1,10 @@
 const User = require('./User');
+const Model = require('./Model');
 
-class Reservation {
+class Reservation extends Model {
 
     constructor(jsonData){
+        super();
         this.reservationId = jsonData.ReservetionId;
         this.ammountOfPeople = jsonData.AmmoutOfPeople;
         this.reservationTime = jsonData.ReservationTime;

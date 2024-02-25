@@ -1,6 +1,9 @@
-class WrkOutPlanMachinePreset{
+const Model = require('./Model');
+
+class WrkOutPlanMachinePreset extends Model{
 
     constructor(jsonData){
+        super();
         this.wrkOutPlanPreset = jsonData.WrkOutPlanPreset;
         this.wrkOutMachine = jsonData.WrkOutMachine;
         this.sets = jsonData.Sets;

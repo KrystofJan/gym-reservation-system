@@ -1,6 +1,9 @@
-class User{
+const Model = require('./Model');
+
+class User extends Model{
 
     constructor(jsonData){
+        super();
         this.userId = jsonData.UserId;
         this.firstName = jsonData.FirstName;
         this.lastName = jsonData.LastName;

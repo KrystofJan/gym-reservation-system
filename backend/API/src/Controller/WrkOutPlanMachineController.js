@@ -1,6 +1,6 @@
-const wrkOutPlanMachineService = require('../Services/WrkOutPlanMachineService');
-const wrkOutPlanService = require('../Services/WrkOutPlanService');
-const wrkOutMachineService = require('../Services/WrkOutMachineService');
+const wrkOutPlanMachineManager = require('../Managers/WrkOutPlanMachineManager');
+const wrkOutPlanManager = require('../Managers/WrkOutPlanManager');
+const wrkOutMachineManager = require('../Managers/WrkOutMachineManager');
 const PlanModel = require('../ORM/Models/WrkOutPlan');
 const MachineModel = require('../ORM/Models/WrkOutMachine');
 const WrkOutPlanMachine = require('../ORM/Models/WrkOutPlanMachine');
@@ -10,8 +10,8 @@ const buildBody = async (planMachine) => {
 
     for(const pm of planMachine){
         
-        const planBody = await wrkOutPlanService.getId(pm.WrkOutPlanId);
-        const machineBody = await wrkOutMachineService.getId(pm.WrkOutMachineId);
+        const planBody = await wrkOutPlanManager.getId(pm.WrkOutPlanId);
+        const machineBody = await wrkOutMachineManager.getId(pm.WrkOutMachineId);
 
         const plan = new PlanModel(planBody);
         const machine = new MachineModel(machineBody);
@@ -33,7 +33,7 @@ const buildBody = async (planMachine) => {
 
 const getIdPlan = async (req,res,id) => {
     try{
-        const planMachine = await wrkOutPlanMachineService.getIdPlan(id);
+        const planMachine = await wrkOutPlanMachineManager.getIdPlan(id);
 
         const result = await buildBody(planMachine);
         res.status(200).json(result);
@@ -45,7 +45,7 @@ const getIdPlan = async (req,res,id) => {
 
 const getIdMachine = async (req,res,id) => {
     try{
-        const planMachine = await wrkOutPlanMachineService.getIdMachine(id);
+        const planMachine = await wrkOutPlanMachineManager.getIdMachine(id);
         
         const result = await buildBody(planMachine);
         res.status(200).json(result);
@@ -63,7 +63,7 @@ const post = async (req, res) => {
 
         if (body.WrkOutMachines){
             for(let b of body.WrkOutMachines){
-                const result = await wrkOutPlanMachineService.post(
+                const result = await wrkOutPlanMachineManager.post(
                     {
                         "WrkOutPlanId": body.WrkOutPlanId,
                         "WrkOutMachineId": b.WrkOutMachineId,
@@ -78,7 +78,7 @@ const post = async (req, res) => {
             response = {"Status": `Created ${ids.length} Machine plan connections for the ${body.WrkOutPlanId}`};
         } 
         else{
-            response  = await wrkOutPlanMachineService.post(body);
+            response  = await wrkOutPlanMachineManager.post(body);
         }
 
         res.status(201).json(response);

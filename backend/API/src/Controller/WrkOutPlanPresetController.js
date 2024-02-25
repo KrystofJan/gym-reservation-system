@@ -1,13 +1,13 @@
-const wrkOutPlanService = require('../Services/WrkOutPlanPresetService');
-const userService = require('../Services/UserService');
+const wrkOutPlanManager = require('../Managers/WrkOutPlanPresetManager');
+const userManager = require('../Managers/UserManager');
 const WrkOutPlanModel = require('../ORM/Models/WrkOutPlanPreset');
 const UserModel = require('../ORM/Models/User');
 
 const getId = async (req,res,id) => {
     try{
-        const wrkOutPlan = await wrkOutPlanService.getId(id);
+        const wrkOutPlan = await wrkOutPlanManager.getId(id);
         
-        const authorData = await userService.getId(wrkOutPlan.AuthorId);
+        const authorData = await userManager.getId(wrkOutPlan.AuthorId);
         const author = new UserModel(authorData);
 
         const model = new WrkOutPlanModel(wrkOutPlan);
@@ -23,13 +23,13 @@ const getId = async (req,res,id) => {
 const getAll = async (req,res) => {
 
     try{
-        const wrkOutPlan = await wrkOutPlanService.getAll();
+        const wrkOutPlan = await wrkOutPlanManager.getAll();
         
         const results = [];
         
         for (const b of wrkOutPlan){
             const a = new WrkOutPlanModel(b);
-            const authorData = await userService.getId(b.AuthorId);
+            const authorData = await userManager.getId(b.AuthorId);
             
             const author =  new UserModel(authorData);
             a.author = author.constructJson();
@@ -50,12 +50,12 @@ const post = async (req, res) => {
 
         if (Array.isArray(body)){
             for (const record of body){
-                const result = await wrkOutPlanService.post(record);
+                const result = await wrkOutPlanManager.post(record);
             }
             res.status(201).json({"status": "All"});
         }
         else{
-            const result = await wrkOutPlanService.post(body);
+            const result = await wrkOutPlanManager.post(body);
             res.status(201).json(result);
         }
     }

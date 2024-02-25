@@ -1,6 +1,6 @@
-const wrkOutPlanTypeService = require('../Services/WrkOutPlanTypeService');
-const wrkOutPlanService = require('../Services/WrkOutPlanService');
-const typeService = require('../Services//ExerciseTypeService');
+const wrkOutPlanTypeManager = require('../Managers/WrkOutPlanTypeManager');
+const wrkOutPlanManager = require('../Managers/WrkOutPlanManager');
+const typeManager = require('../Managers//ExerciseTypeManager');
 const PlanModel = require('../ORM/Models/WrkOutPlan');
 const ExerciseTypeModel = require('../ORM/Models/ExerciseType');
 const WrkOutMachinePlanModel = require('../ORM/Models/WrkOutPlanType');
@@ -10,8 +10,8 @@ const buildBody = async (planType) => {
 
     for(const pt of planType){
         
-        const planBody = await wrkOutPlanService.getId(pt.WrkOutPlanId);
-        const typeBody = await typeService.get(pt.ExerciseTypeId);
+        const planBody = await wrkOutPlanManager.getId(pt.WrkOutPlanId);
+        const typeBody = await typeManager.get(pt.ExerciseTypeId);
 
         const plan = new PlanModel(planBody);
         const exerciseType = new ExerciseTypeModel(typeBody);
@@ -27,7 +27,7 @@ const buildBody = async (planType) => {
 
 const getIdPlan = async (req,res,id) => {
     try{
-        const planType = await wrkOutPlanTypeService.getIdPlan(id);
+        const planType = await wrkOutPlanTypeManager.getIdPlan(id);
         
         const result = await buildBody(planType);
         res.status(200).json(result);
@@ -39,7 +39,7 @@ const getIdPlan = async (req,res,id) => {
 
 const getIdType = async (req,res,id) => {
     try{
-        const planType = await wrkOutPlanTypeService.getIdType(id);
+        const planType = await wrkOutPlanTypeManager.getIdType(id);
         
         const result = await buildBody(planType);
         res.status(200).json(result);
@@ -56,7 +56,7 @@ const post = async (req, res) => {
 
         if (body.ExerciseTypeIds){
             for(let exerciseTypeId of body.ExerciseTypeIds){
-                const result = await wrkOutPlanTypeService.post({
+                const result = await wrkOutPlanTypeManager.post({
                         "WrkOutPlanId": body.WrkOutPlanId,
                         "ExerciseTypeId": exerciseTypeId
                     });
@@ -66,7 +66,7 @@ const post = async (req, res) => {
             };
         } 
         else{
-            response  = await wrkOutPlanMachineService.post(body);
+            response  = await wrkOutPlanMachineManager.post(body);
         }
 
         res.status(201).json(response);

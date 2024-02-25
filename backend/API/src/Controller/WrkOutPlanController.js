@@ -1,13 +1,13 @@
-const wrkOutPlanService = require('../Services/WrkOutPlanService');
-const userService = require('../Services/UserService');
+const wrkOutPlanManager = require('../Managers/WrkOutPlanManager');
+const userManager = require('../Managers/UserManager');
 const WrkOutPlanModel = require('../ORM/Models/WrkOutPlan');
 const UserModel = require('../ORM/Models/User');
 
 const getId = async (req,res,id) => { // getOne
     try{ // Tohle cele do Managera
-        const wrkOutPlan = await wrkOutPlanService.getId(id); // manager // getById
+        const wrkOutPlan = await wrkOutPlanManager.getId(id); // manager // getById
 
-        const customerData = await userService.getId(wrkOutPlan.UserId);
+        const customerData = await userManager.getId(wrkOutPlan.UserId);
         const customer = new UserModel(customerData);
 
         const model = new WrkOutPlanModel(wrkOutPlan);
@@ -23,13 +23,13 @@ const getId = async (req,res,id) => { // getOne
 const getAll = async (req,res) => {
 
     try{
-        const wrkOutPlan = await wrkOutPlanService.getAll();
+        const wrkOutPlan = await wrkOutPlanManager.getAll();
         
         const results = [];
         
         for (const b of wrkOutPlan){
             const a = new WrkOutPlanModel(b);
-            const userData = await userService.getId(b.UserId);
+            const userData = await userManager.getId(b.UserId);
             
             const user =  new UserModel(userData);
             a.user = user.constructJson();
@@ -51,7 +51,7 @@ const post = async (req, res) => {
         if (Array.isArray(body)){
             const ids = []
             for (const record of body){
-                const result = await wrkOutPlanService.post(record);
+                const result = await wrkOutPlanManager.post(record);
                 ids.push(result.CreatedId);
             }
             
@@ -61,7 +61,7 @@ const post = async (req, res) => {
             });
         }
         else{
-            const result = await wrkOutPlanService.post(body);
+            const result = await wrkOutPlanManager.post(body);
             res.status(201).json(result);
         }
     }

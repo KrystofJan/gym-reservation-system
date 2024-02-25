@@ -1,49 +1,30 @@
-const addressService = require('../Services/AddressService');
+const addressManager = require('../Managers/AddressManager');
 const AddressModel = require('../ORM/Models/Address');
+const BadRequestResponse = require('../RequestUtility/CustomResponses/BadRequestResponse');
+const AddressPostModel = require('../RequestUtility/PostModels/AddressPostModel');
 
 const getAll = async (req, res) => {
-    try{
-        const body = await addressService.getAll();
-        
-        // validate...
-        const results = [];
-        
-        for (const b of body){
-            const a = new AddressModel(b);
-            results.push(a.constructJson());
-        }
-        
-        res.status(200).json(results);
-    }
-    catch(err){
-        res.status(500).json(err);
-    }
+    const response = await addressManager.getAll();
+    res.status(response.statusCode).json(response.responseBody);
 }
 
 const getId = async (req,res,id) => {
-    try{
-        const address = await addressService.get(id);
-        
-        const model = new AddressModel(address);
-
-        res.status(200).json(model.constructJson(address));
-    }
-    catch(err){
-        res.status(500).json(err);
-    }
+    const response = await addressManager.getId(id);
+    res.status(response.statusCode).json(response.responseBody);
 }
 
 
 const post = async (req, res) => {
-    try{
-        const body = req.body;
-        const result = await addressService.post(body);
+    const addressPostModel = new AddressPostModel(req.body);
 
-        res.status(201).json(result);
+    if (addressPostModel.isNull()){
+        const response = new BadRequestResponse("Wrong request body");
+        res.status(response.statusCode).json(response.responseBody);
+        return;
     }
-    catch(err){
-        res.status(500).json(err);
-    }
+    
+    const response = await addressManager.post(addressPostModel);
+    res.status(response.statusCode).json(response.responseBody);
 }
 
 module.exports = {

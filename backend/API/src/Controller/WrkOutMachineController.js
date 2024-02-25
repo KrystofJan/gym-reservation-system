@@ -1,10 +1,10 @@
-const wrkOutMachineService = require('../Services/WrkOutMachineService');
+const wrkOutMachineManager = require('../Managers/WrkOutMachineManager');
 const WrkOutMachineModel = require('../ORM/Models/WrkOutMachine');
 const RecommendedMachine = require('../ORM/Models/RecommendMachine');
 
 const getAll = async (req, res) => {
     try{
-        const body = await wrkOutMachineService.getAll();
+        const body = await wrkOutMachineManager.getAll();
 
         // validate...
         const results = [];
@@ -24,7 +24,7 @@ const getAll = async (req, res) => {
 
 const getId = async (req,res,id) => {
     try{
-        const body = await wrkOutMachineService.getId(id);
+        const body = await wrkOutMachineManager.getId(id);
         
         const model = new WrkOutMachineModel(body);
         
@@ -37,7 +37,7 @@ const getId = async (req,res,id) => {
 
 const recommendMachine = async (req,res,id) => {
     try{
-        const body = await wrkOutMachineService.recommendMachine(id);
+        const body = await wrkOutMachineManager.recommendMachine(id);
 
         const result = [];
         for (const b of body){
@@ -55,7 +55,7 @@ const recommendMachine = async (req,res,id) => {
 const post = async (req, res) => {
     try{
         const body = req.body;
-        const result = await wrkOutMachineService.post(body);
+        const result = await wrkOutMachineManager.post(body);
 
         res.status(201).json(result);
     }

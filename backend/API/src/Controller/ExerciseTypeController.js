@@ -1,9 +1,9 @@
-const exerciseTypeService = require('../Services/ExerciseTypeService');
+const exerciseTypeManager = require('../Managers/ExerciseTypeManager');
 const ExerciseTypeModel = require('../ORM/Models/ExerciseType');
 
 const getAll = async (req, res) => {
     try{
-        const body = await exerciseTypeService.getAll();
+        const body = await exerciseTypeManager.getAll();
         
         // validate...
         const results = [];
@@ -23,7 +23,7 @@ const getAll = async (req, res) => {
 
 const getId = async (req,res,id) => {
     try{
-        const body = await exerciseTypeService.get(id);
+        const body = await exerciseTypeManager.get(id);
         
         const model = new ExerciseTypeModel(body);
 
@@ -37,7 +37,7 @@ const getId = async (req,res,id) => {
 const post = async (req, res) => {
     try{
         const body = req.body;
-        const result = await exerciseTypeService.post(body);
+        const result = await exerciseTypeManager.post(body);
 
         res.status(201).json(result);
     }

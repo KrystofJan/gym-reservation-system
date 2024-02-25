@@ -1,7 +1,7 @@
-const wrkOutPlanMachinePresetService = require('../Services/WrkOutPlanMachinePresetService');
-const wrkOutPlanPresetService = require('../Services/WrkOutPlanPresetService');
-const wrkOutMachineService = require('../Services/WrkOutMachineService');
-const userService = require('../Services/UserService');
+const wrkOutPlanMachinePresetManager = require('../Managers/WrkOutPlanMachinePresetManager');
+const wrkOutPlanPresetManager = require('../Managers/WrkOutPlanPresetManager');
+const wrkOutMachineManager = require('../Managers/WrkOutMachineManager');
+const userManager = require('../Managers/UserManager');
 const PresetModel = require('../ORM/Models/WrkOutPlanPreset');
 const MachineModel = require('../ORM/Models/WrkOutMachine');
 const WrkOutPlanMachinePreset = require('../ORM/Models/WrkOutPlanMachinePreset');
@@ -12,9 +12,9 @@ const buildBody = async (planMachine) => {
 
     for(const pm of planMachine){
         
-        const planBody = await wrkOutPlanPresetService.getId(pm.WrkOutPlanPresetId);
-        const machineBody = await wrkOutMachineService.getId(pm.WrkOutMachineId);
-        const authorBody = await userService.getId(planBody.AuthorId);
+        const planBody = await wrkOutPlanPresetManager.getId(pm.WrkOutPlanPresetId);
+        const machineBody = await wrkOutMachineManager.getId(pm.WrkOutMachineId);
+        const authorBody = await userManager.getId(planBody.AuthorId);
 
         const plan = new PresetModel(planBody);
         const machine = new MachineModel(machineBody);
@@ -35,7 +35,7 @@ const buildBody = async (planMachine) => {
 
 const getIdPreset = async (req,res,id) => {
     try{
-        const planMachine = await wrkOutPlanMachinePresetService.getIdPreset(id);
+        const planMachine = await wrkOutPlanMachinePresetManager.getIdPreset(id);
 
         const result = await buildBody(planMachine);
         res.status(200).json(result);
@@ -47,7 +47,7 @@ const getIdPreset = async (req,res,id) => {
 
 const getIdMachine = async (req,res,id) => {
     try{
-        const planMachine = await wrkOutPlanMachinePresetService.getIdMachine(id);
+        const planMachine = await wrkOutPlanMachinePresetManager.getIdMachine(id);
         
         const result = await buildBody(planMachine);
         res.status(200).json(result);
@@ -60,7 +60,7 @@ const getIdMachine = async (req,res,id) => {
 const post = async (req, res) => {
     try{
         const body = req.body;
-        const result = await wrkOutPlanMachinePresetService.post(body);
+        const result = await wrkOutPlanMachinePresetManager.post(body);
 
         res.status(201).json(result);
     }

@@ -1,4 +1,4 @@
-const userService = require('../Services/UserService');
+const userManager = require('../Managers/UserManager');
 const UserModel = require('../ORM/Models/User');
 const UserAuthModel = require('../ORM/Models/UserAuth');
 
@@ -6,10 +6,10 @@ const loginAuth = async (req, res) => {
     try{
         const userAuth = new UserAuthModel(req.body);
         
-        let result = await userService.getValueLogin(userAuth.loginOrEmail);
+        let result = await userManager.getValueLogin(userAuth.loginOrEmail);
         
         if (result){
-            result = await userService.getValueEmail(userAuth.loginOrEmail);
+            result = await userManager.getValueEmail(userAuth.loginOrEmail);
         }
         const real_result = result[0];
 
@@ -26,7 +26,7 @@ const loginAuth = async (req, res) => {
 const register = async (req, res) => {
     try{
         const body = req.body;
-        const result = await userService.register(body);
+        const result = await userManager.register(body);
 
         res.status(201).json(result);
     }

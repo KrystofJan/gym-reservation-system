@@ -1,8 +1,8 @@
-const machineExerciseTypesService = require('../Services/MachineExerciseTypesService');
-const machineService = require('../Services/WrkOutMachineService');
+const machineExerciseTypesManager = require('../Managers/MachineExerciseTypesManager');
+const machineManager = require('../Managers/WrkOutMachineManager');
 const MachineModel = require('../ORM/Models/WrkOutMachine');
 const ExerciseTypeModel = require('../ORM/Models/ExerciseType');
-const typeService = require('../Services//ExerciseTypeService');
+const typeManager = require('../Managers//ExerciseTypeManager');
 const MachineExerciseTypesModel = require('../ORM/Models/MachineExerciseTypes');
 
 const buildBody = async (machineType) => {
@@ -10,8 +10,8 @@ const buildBody = async (machineType) => {
 
     for(const mt of machineType){
             
-        const machineBody = await machineService.getId(mt.WrkOutMachineId);
-        const typeBody = await typeService.get(mt.ExerciseTypeId);
+        const machineBody = await machineManager.getId(mt.WrkOutMachineId);
+        const typeBody = await typeManager.get(mt.ExerciseTypeId);
 
         const machine = new MachineModel(machineBody);
         const exerciseType = new ExerciseTypeModel(typeBody);
@@ -27,7 +27,7 @@ const buildBody = async (machineType) => {
 
 const getIdMachine = async (req,res,id) => {
     try{
-        const machineType = await machineExerciseTypesService.getIdMachine(id);
+        const machineType = await machineExerciseTypesManager.getIdMachine(id);
 
         const result = await buildBody(machineType);
         res.status(200).json(result);
@@ -39,7 +39,7 @@ const getIdMachine = async (req,res,id) => {
 
 const getIdType = async (req,res,id) => {
     try{
-        const machineType = await machineExerciseTypesService.getIdType(id);
+        const machineType = await machineExerciseTypesManager.getIdType(id);
 
         const result = await buildBody(machineType);
         res.status(200).json(result);
@@ -52,7 +52,7 @@ const getIdType = async (req,res,id) => {
 const post = async (req, res) => {
     try{
         const body = req.body;
-        const result = await machineExerciseTypesService.post(body);
+        const result = await machineExerciseTypesManager.post(body);
 
         res.status(201).json(result);
     }

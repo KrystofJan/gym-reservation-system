@@ -9,7 +9,6 @@ const getAll = async () => {
 
         const body = await addressDAO.getAll();
         
-        // validate...
         const results = [];
         
         for (const b of body){
@@ -36,7 +35,6 @@ const get = async (id) => {
     catch(err){
         return new FailedResponse(err);
     }
-
 }
 
 const post = async (body) => {

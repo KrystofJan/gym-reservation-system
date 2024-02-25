@@ -1,49 +1,32 @@
 const exerciseTypeManager = require('../Managers/ExerciseTypeManager');
-const ExerciseTypeModel = require('../ORM/Models/ExerciseType');
+const ExerciseTypePostModel = require('../RequestUtility/PostModels/ExerciseTypePostModel');
 
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 const getAll = async (req, res) => {
-    try{
-        const body = await exerciseTypeManager.getAll();
-        
-        // validate...
-        const results = [];
-        
-        for (const b of body){
-            const a = new ExerciseTypeModel(b);
-
-            results.push(a.constructJson());
-        }
-        
-        res.status(200).json(results);
-    }
-    catch(err){
-        res.status(500).json(err);
-    }
+    const response = await exerciseTypeManager.getAll();
+    res.status(response.statusCode).json(response.responseBody);
 }
 
-const getId = async (req,res,id) => {
-    try{
-        const body = await exerciseTypeManager.get(id);
-        
-        const model = new ExerciseTypeModel(body);
-
-        res.status(200).json(model.constructJson());
-    }
-    catch(err){
-        res.status(500).json(err);
-    }
-}
+const getId = async (req,res,id) =>{
+    const response = await exerciseTypeManager.get(id);
+    res.status(response.statusCode).json(response.responseBody);
+} 
 
 const post = async (req, res) => {
-    try{
-        const body = req.body;
-        const result = await exerciseTypeManager.post(body);
+    const exerciseTypePostModel = new ExerciseTypePostModel(req.body);
 
-        res.status(201).json(result);
+    if (exerciseTypePostModel.isNull()){
+        const response = new BadRequestResponse("Wrong request body");
+        res.status(response.statusCode).json(response.responseBody);
+        return;
     }
-    catch(err){
-        res.status(500).json(err);
-    }
+    
+    const response = await exerciseTypeManager.post(exerciseTypePostModel);
+    res.status(response.statusCode).json(response.responseBody);
 }
 
 module.exports = {

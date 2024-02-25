@@ -2,7 +2,11 @@ const PostModel = require('./PostModel');
 const utils = require('../../utils/utils');
 
 class AddressPostModel extends PostModel{
+    /**
+     * @param {Object} jsonData 
+     */
     constructor(jsonData){
+        super();
         this.Street = jsonData.Street;
         this.City = jsonData.City;
         this.PostalCode = jsonData.PostalCode;
@@ -12,7 +16,6 @@ class AddressPostModel extends PostModel{
     }
 
     /**
-     * 
      * @returns {boolean}
      */
     isNull() {

@@ -9,7 +9,7 @@ MachineExerciseTypesRouter.get('/machine/:id', (req, res) => {
 });
 
 MachineExerciseTypesRouter.get('/type/:id', (req, res) => {
-    machineExerciseTypesController.getIdType(req, res, req.params['id']);
+    machineExerciseTypesController.getIdType(req, res, req.params['id']); // workout-machines/
 });
 
 MachineExerciseTypesRouter.post('/', (req, res) => {

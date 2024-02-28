@@ -1,4 +1,4 @@
-class Response {
+class BaseResponse {
     
     /**
      * @param {Number} status_code 
@@ -9,4 +9,5 @@ class Response {
         this.responseBody = response_body;
     }
 }
-module.exports = Response;
+
+module.exports = BaseResponse;

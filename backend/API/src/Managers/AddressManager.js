@@ -2,7 +2,13 @@ const AddressDAO = require('../ORM/AccessModels/AddressDAO');
 const SuccessfulResponse = require('../RequestUtility/CustomResponses/SuccessfulResponse');
 const FailedResponse = require('../RequestUtility/CustomResponses/FailedResponse');;
 const AddressModel = require('../ORM/Models/Address');
+const BaseResponse = require('../RequestUtility/CustomResponses/BaseResponse');
+const AddressPostModel = require('../RequestUtility/PostModels/AddressPostModel');
 
+/**
+ * 
+ * @returns { BaseResponse }
+ */
 const getAll = async () => {
     try{
         const addressDAO = new AddressDAO();
@@ -23,7 +29,12 @@ const getAll = async () => {
     }
 }
 
-const get = async (id) => {
+/**
+ * 
+ * @param {Number} id 
+ * @returns { BaseResponse }
+ */
+const get = async (id) => { // getById
     try{
         const addressDAO = new AddressDAO();
         const address = await addressDAO.get(id);
@@ -37,7 +48,12 @@ const get = async (id) => {
     }
 }
 
-const post = async (body) => {
+/**
+ * 
+ * @param { AddressPostModel } body 
+ * @returns { BaseResponse }
+ */
+const post = async (body) => { // create
     try{
         const addressDAO = new AddressDAO();
         const result = await addressDAO.post(body);

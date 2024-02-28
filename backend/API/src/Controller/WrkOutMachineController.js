@@ -35,6 +35,19 @@ const getId = async (req,res,id) => {
     }
 }
 
+const getByIdWithTypes = async (req,res,id) => {
+    try{
+        const body = await wrkOutMachineManager.getByIdWithTypes(id);
+        
+        const model = new WrkOutMachineModel(body);
+        
+        res.status(200).json(model.constructJson());
+    }
+    catch(err){
+        res.status(500).json(err);
+    }
+}
+
 const recommendMachine = async (req,res,id) => {
     try{
         const body = await wrkOutMachineManager.recommendMachine(id);

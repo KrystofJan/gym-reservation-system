@@ -1,64 +1,55 @@
 const machineExerciseTypesManager = require('../Managers/MachineExerciseTypesManager');
-const machineManager = require('../Managers/WrkOutMachineManager');
-const MachineModel = require('../ORM/Models/WrkOutMachine');
-const ExerciseTypeModel = require('../ORM/Models/ExerciseType');
-const typeManager = require('../Managers//ExerciseTypeManager');
-const MachineExerciseTypesModel = require('../ORM/Models/MachineExerciseTypes');
+const BadRequestResponse = require('../RequestUtility/CustomResponses/BadRequestResponse');
+const MachineTypesPostModel = require('../RequestUtility/PostModels/MachineTypesPostModel');
 
-const buildBody = async (machineType) => {
-    const result = [];
-
-    for(const mt of machineType){
-            
-        const machineBody = await machineManager.getId(mt.WrkOutMachineId);
-        const typeBody = await typeManager.get(mt.ExerciseTypeId);
-
-        const machine = new MachineModel(machineBody);
-        const exerciseType = new ExerciseTypeModel(typeBody);
-
-        const model = new MachineExerciseTypesModel({
-            "WrkOutMachine": machine.constructJson(),
-            "ExerciseType": exerciseType.constructJson()
-        });
-        result.push(model.constructJson(model));
-    }
-    return result;
-}
-
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {Number} id 
+ */
 const getIdMachine = async (req,res,id) => {
-    try{
-        const machineType = await machineExerciseTypesManager.getIdMachine(id);
-
-        const result = await buildBody(machineType);
-        res.status(200).json(result);
-    }
-    catch(err){
-        res.status(500).json(err);
-    }
+    const response = await machineExerciseTypesManager.getIdMachine(id);
+    res.status(response.statusCode).json(response.responseBody);
 }
 
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {Number} id 
+ */
 const getIdType = async (req,res,id) => {
-    try{
-        const machineType = await machineExerciseTypesManager.getIdType(id);
+    console.log(id);
+    if(typeof id === "number"){
 
-        const result = await buildBody(machineType);
-        res.status(200).json(result);
     }
-    catch(err){
-        res.status(500).json(err);
+    const response = await machineExerciseTypesManager.getIdType(id);
+
+    if(response.statusCode == 200 && (response.responseBody == {} || response.responseBody == [])){
+
+        const customResponse = new BadRequestResponse("No")
     }
+
+    res.status(response.statusCode).json(response.responseBody);
 }
 
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 const post = async (req, res) => {
-    try{
-        const body = req.body;
-        const result = await machineExerciseTypesManager.post(body);
+    const machineTypesPostModel = new MachineTypesPostModel(req.body);
 
-        res.status(201).json(result);
+    if (machineTypesPostModel.isNull()){
+        const response = new BadRequestResponse("Wrong request body");
+        res.status(response.statusCode).json(response.responseBody);
+        return;
     }
-    catch(err){
-        res.status(500).json(err);
-    }
+    
+    const response = await exerciseTypeManager.post(machineTypesPostModel);
+    res.status(response.statusCode).json(response.responseBody);
 }
 
 module.exports = {

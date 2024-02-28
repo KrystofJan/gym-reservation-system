@@ -1,6 +1,6 @@
-const Response = require('./Response');
+const BaseResponse = require('./BaseResponse');
 
-class SuccessfulResponse extends Response {
+class SuccessfulResponse extends BaseResponse {
 
     /**
      * 

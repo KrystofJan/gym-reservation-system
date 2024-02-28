@@ -18,7 +18,7 @@ const setRoutes = (app) => {
     app.use('/api/machine', wrkOutMachineRouter);
     app.use('/api/userauth',userAuthRouter);
     app.use('/api/exercise-type', exerciseTypeRouter);
-    app.use('/api/machine-type', machineExerciseTypesRouter);
+    app.use('/api/machine-type', machineExerciseTypesRouter); // move to machine and type
     app.use('/api/plan-type', wrkOutPlanTypeRouter);
     app.use('/api/plan-machine', wrkOutPlanMachineRouter);
     app.use('/api/plan/preset', wrkOutPlanPresetRouter);

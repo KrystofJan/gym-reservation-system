@@ -2,7 +2,13 @@ const ExerciseTypeDAO = require('../ORM/AccessModels/ExerciseTypeDAO');
 const FailedResponse = require('../RequestUtility/CustomResponses/FailedResponse');
 const SuccessfulResponse = require('../RequestUtility/CustomResponses/SuccessfulResponse');
 const ExerciseTypeModel = require('../ORM/Models/ExerciseType');
+const BaseResponse = require('../RequestUtility/CustomResponses/BaseResponse');
+const ExerciseTypePostModel = require('../RequestUtility/PostModels/ExerciseTypePostModel');
 
+/**
+ * 
+ * @returns {BaseResponse}
+ */
 const getAll = async () => {
 
     try{
@@ -25,6 +31,12 @@ const getAll = async () => {
     }
 }
 
+
+/**
+ * 
+ * @param {Number} id 
+ * @returns {BaseResponse}
+ */
 const get = async (id) => {
     try{
         const exerciseTypeDAO = new ExerciseTypeDAO(); 
@@ -40,6 +52,11 @@ const get = async (id) => {
     }
 }
 
+/**
+ * 
+ * @param {ExerciseTypePostModel} body 
+ * @returns {BaseResponse}
+ */
 const post = async (body) => {
     try{
         const exerciseTypeDAO = new ExerciseTypeDAO(); 

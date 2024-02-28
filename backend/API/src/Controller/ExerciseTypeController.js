@@ -11,11 +11,22 @@ const getAll = async (req, res) => {
     res.status(response.statusCode).json(response.responseBody);
 }
 
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {Number} id 
+ */
 const getId = async (req,res,id) =>{
     const response = await exerciseTypeManager.get(id);
     res.status(response.statusCode).json(response.responseBody);
 } 
 
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 const post = async (req, res) => {
     const exerciseTypePostModel = new ExerciseTypePostModel(req.body);
 

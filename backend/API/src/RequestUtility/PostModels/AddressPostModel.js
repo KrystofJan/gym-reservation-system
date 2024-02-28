@@ -18,7 +18,7 @@ class AddressPostModel extends PostModel{
     /**
      * @returns {boolean}
      */
-    isNull() {
+    isNull() { // validateProps
         const obj =  utils.cleanObject(this);
         return (!obj); 
     }

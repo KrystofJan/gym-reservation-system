@@ -11,6 +11,10 @@ WrkOutMachineRouter.get('/:id', (req, res) => {
     wrkOutMachineController.getId( req,res,req.params['id']);
 });
 
+WrkOutMachineRouter.get('/types/:id', (req, res) => {
+    wrkOutMachineController.getId( req,res,req.params['id']);
+});
+
 WrkOutMachineRouter.post('/', (req, res) => {
     wrkOutMachineController.post( req,res);
 });
